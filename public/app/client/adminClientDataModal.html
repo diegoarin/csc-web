@@ -1,0 +1,91 @@
+<div class="modal-text">
+
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 ng-if="type == 'CREATE'" class="modal-title">Crear nuevo cliente</h4>
+    <h4 ng-if="type == 'UPDATE'" class="modal-title">Modificar cliente</h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="row" ng-form="clientForm">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>ID Cliente</label>
+          <input type="text" class="form-control" ng-model="client.cr" required>
+        </div>
+        <div class="form-group">
+          <label>ID Sucursal</label>
+          <input type="text" class="form-control" ng-model="client.branch_cr" required>
+        </div>
+        <div class="form-group">
+          <label>Rut</label>
+          <input type="text" class="form-control" ng-model="client.rut">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="text" class="form-control" ng-model="client.phone">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Razón social</label>
+          <input type="text" class="form-control" ng-model="client.business" required>
+        </div>
+        <div class="form-group">
+          <label>Nombre sucursal</label>
+          <input type="text" class="form-control" ng-model="client.branch_name">
+        </div>
+        <div class="form-group">
+          <label>Código QR</label>
+          <input type="text" class="form-control" ng-model="client.qr">
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="client.active">Activo
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" class="form-control" ng-model="client.address" required>
+        </div>
+        <div class="form-group" ng-init="init()">
+          <label>Seleccione ubicación en el mapa</label>
+          <div id="map_canvas"></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <span ng-if="!!client.lat">
+          <div class="form-group text-center">
+            <label>Latitud</label>
+            <span>{{client.lat}}</span>
+          </div>
+        </span>
+      </div>
+      <div class="col-lg-6">
+        <span ng-if="!!client.long">
+          <div class="form-group text-center">
+            <label>longitud</label>
+            <span>{{client.long}}</span>
+          </div>
+        </span>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label>Comentarios</label>
+          <textarea ng-model="client.comment" class="form-control" rows="3"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" ng-disabled="clientForm.$invalid || !client.lat || !client.long" ng-click="save()">Guardar</button>
+  </div>
+
+</div>

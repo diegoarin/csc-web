@@ -1,0 +1,56 @@
+<div access-error></div>
+<div ng-if="$root.isLogged">
+  <div>
+    <div class="col-lg-12 dark-green-background padding-top-10 padding-bottom-10">
+      <div class="row">
+        <div class="col-lg-1 text-center">
+          <img class="margin-top-minus-5" src="images/client-50.png">
+        </div>
+        <div class="col-lg-5">
+          <h3 class="margin-top-12">Administración de clientes</h3>
+        </div>
+        <div class="col-lg-6 margin-top-3">
+          <button type="button" class="btn btn-success btn-lg pull-right" ng-click="createClientDataModal()">
+            Crear nuevo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="allClients.length > 0" class="col-lg-12 margin-top-40">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Razón social</th>
+          <th>Sucursal</th>
+          <th>Rut</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th class="text-right">Modificar</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="client in allClients | orderBy:'cr'">
+        <tr>
+          <td>{{client.cr}}</td>
+          <td>{{client.business}}</td>
+          <td>
+            <span>{{client.branch_cr}}</span>
+            <span ng-if="!!client.branch_name"> - {{client.branch_name}}</span>
+          </td>
+          <td>{{client.rut}}</td>
+          <td>{{client.address}}</td>
+          <td>{{client.phone}}</td>
+          <td>
+            <span ng-if="client.active">Activo</span>
+            <span ng-if="!client.active">Inactivo</span>
+          </td>
+          <td class="text-right">
+            <img src="images/edit.png" class="cursor-pointer margin-right-15" ng-click="modifyClientDataModal(client)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

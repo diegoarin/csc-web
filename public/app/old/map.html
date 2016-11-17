@@ -1,0 +1,8 @@
+<div ng-controller="mapCtrl">
+	<div id="outputDiv"></div>
+	<div id="map"></div>
+    	<div ng-repeat="marker in markers | orderBy : 'title'">
+      		<a ng-click="openInfoWindow($event, marker)"></a>
+    	</div>
+</div>
+

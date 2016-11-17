@@ -1,0 +1,13 @@
+<div class="error-modal">
+  <div class="modal-header red-border-bottom">
+    <button type="button" class="close modal-close" ng-click="close()">&times;</button>
+    <h4>{{error.title}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center"><strong>{{error.message}}</strong></div>
+    <!-- <div class="text-center"><strong>Ocurrió un error, intente nuevamente mas tarde.</strong></div> -->
+  </div>
+  <div class="modal-footer red-border-top">
+    <button type="button" class="btn btn-default btn-danger" ng-click="close()">Cerrar</button>
+  </div>
+</div>

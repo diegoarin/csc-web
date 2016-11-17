@@ -1,0 +1,22 @@
+<div class="modal-text">
+
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Clientes del recorrido {{route.id}} ({{route.dispatcher_name}})</h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 margin-left-20">
+        <div ng-repeat="routeClients in allRouteClients">
+          <div><h4><li>{{routeClients.client_name}}</li></h4></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Cerrar</button>
+  </div>
+
+</div>

@@ -1,0 +1,83 @@
+<div class="modal-text">
+
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 ng-if="type == 'CREATE'" class="modal-title">Crear nuevo usuario web</h4>
+    <h4 ng-if="type == 'UPDATE'" class="modal-title">Modificar usuario web</h4>
+  </div>
+
+    <div class="modal-body">
+	    <div class="row" ng-form="adminUserForm">
+	    	<div class="col-lg-12">
+	    		<div class="form-group" ng-class="{'row': type == 'UPDATE'}">
+	    			<label ng-class="{'col-lg-12': type == 'UPDATE'}">Usuario</label>
+            <input ng-if="type == 'CREATE'" type="text" ng-class="{'col-lg-12': type == 'UPDATE'}" class="form-control" ng-model="user.login" required>
+	    			<span ng-if="type == 'UPDATE'" ng-class="{'col-lg-12': type == 'UPDATE'}">{{user.login}}</span>
+	    		</div>
+	    		<div class="form-group">
+	    			<label>Nombre</label>
+	    			<input type="text" class="form-control" ng-model="user.name" required>
+	    		</div>
+          <div class="form-group" ng-class="{'row': type == 'UPDATE'}">
+	    			<label ng-class="{'col-lg-12': type == 'UPDATE'}">Email</label>
+            <input ng-if="type == 'CREATE'" type="text" ng-class="{'col-lg-12': type == 'UPDATE'}" class="form-control" ng-model="user.email" required>
+	    			<span ng-if="type == 'UPDATE'" ng-class="{'col-lg-12': type == 'UPDATE'}">{{user.email}}</span>
+	    		</div>
+	    		<div class="row form-group">
+	    			<div class="col-lg-12">
+	    				<label>Permisos  </label>
+	    			</div>
+	    			<div class="col-lg-4">
+		    			<div class="checkbox">
+			          <label>
+                  <input type="checkbox" ng-model="user.adm_users">Adm. Usuarios Web
+			          </label>
+			        </div>
+		    			<div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="user.queries" ng-model="user.adminWebUser">Consultas
+			          </label>
+			        </div>
+		    		</div>
+		    		<div class="col-lg-4">
+		    			<div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="user.adm_clients">Adm. Clientes
+			          </label>
+			        </div>
+		    			<div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="user.reports">Reportes
+			          </label>
+			        </div>
+		    		</div>
+		    		<div class="col-lg-4">
+		    			<div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="user.adm_dispatchers">Adm. Transportistas
+			          </label>
+			        </div>
+		    		</div>
+	    		</div>
+	    		<div ng-if="type == 'UPDATE'" class="row form-group">
+	    			<div class="col-lg-12">
+	    				<label>Estado</label>
+	    			</div>
+	    			<div class="col-lg-12">
+		    			<div class="checkbox">
+			          <label>
+			            <input type="checkbox" ng-model="user.active">Activo
+			          </label>
+			        </div>
+	          </div>
+          </div>
+	    	</div>
+	    </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" ng-click="close()">Cancelar</button>
+      <button type="button" class="btn btn-primary" ng-disabled="adminUserForm.$invalid" ng-click="save()">Guardar</button>
+    </div>
+
+</div>

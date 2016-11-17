@@ -1,0 +1,43 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-header">
+		<img class="cursor-pointer margin-top-5" height="40" ng-click="goHome()" src="images/logo-carrau.png">
+	</div>
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  	<ul ng-if="$root.isLogged" class="nav navbar-nav">
+    		<li class="dropdown" ng-if="$root.loggedUser.adm_users || $root.loggedUser.adm_clients || $root.loggedUser.adm_dispatchers">
+      			<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración de usuarios<span class="caret"></span></a>
+      			<ul class="dropdown-menu">
+        			<li><a class="cursor-pointer" ng-if="$root.loggedUser.adm_users" ng-click="adminWebUsers()">Usuarios web</a></li>
+        			<li><a class="cursor-pointer" ng-if="$root.loggedUser.adm_clients" ng-click="adminClients()">Clientes</a></li>
+        			<li><a class="cursor-pointer" ng-if="$root.loggedUser.adm_dispatchers" ng-click="adminDispatchers()">Transportistas</a></li>
+      			</ul>
+    		</li>
+				<li class="dropdown" ng-if="$root.loggedUser.queries">
+						<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consultas<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a class="cursor-pointer" ng-click="showOrders()">Pedidos</a></li>
+							<li><a class="cursor-pointer" ng-click="showRoutes()">Recorridos actuales</a></li>
+							<li><a class="cursor-pointer" ng-click="showHistoryRoutes()">Recorridos históricos</a></li>
+						</ul>
+				</li>
+				<li class="dropdown" ng-if="$root.loggedUser.reports">
+						<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a class="cursor-pointer" ng-click="dailyReports()">Reportes rápidos</a></li>
+							<li><a class="cursor-pointer" ng-click="businessReports()">Reportes de negocio</a></li>
+						</ul>
+				</li>
+  	</ul>
+  	<ul class="nav navbar-nav navbar-right margin-right-minus-10">
+    		<li ng-if="$root.isLogged" class="dropdown">
+      			<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>{{$root.loggedUser.name}}</b><span class="caret"></span></a>
+      			<ul class="dropdown-menu">
+        			<li><a  ng-click="goProfile()" class="cursor-pointer"><span class="glyphicon glyphicon-pencil"></span> Editar perfil</a></li>
+        			<li><a ng-click="goHelp()" class="cursor-pointer"><span class="glyphicon glyphicon-question-sign"></span> Ayuda</a></li>
+        			<li role="separator" class="divider"></li>
+        			<li><a class="cursor-pointer" ng-click="logout($root.loggedUser.id)"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+      			</ul>
+    		</li>
+		</ul>
+	</div>
+</div>

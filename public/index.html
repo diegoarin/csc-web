@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <link rel="shortcut icon" href="/images/favicon.ico?2ff04408">
+        <title>CSC</title>
+
+        <!-- Begin Stylesheets -->
+        <link href='http://fonts.googleapis.com/css?family=Exo:200,400' rel='stylesheet' type='text/css'>
+        <link href="/dist/css/seq-ari.css?f48dbdf9" rel="stylesheet" type="text/css" />
+        <!-- End Stylesheets -->
+        <!-- Begin Javascripts -->
+        <script src="/dist/js/seq-ari-libs.js?6b005b3e"></script>
+        <script src="/dist/js/seq-ari.js?4e4685d9"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyABxCHmAFp3mJDK6O4PGJApi0eUuQAIbDc"></script>
+        <!-- End Javascripts -->
+    </head>
+    <body  ng-app="seqariApp" ng-controller="homeCtrl">
+      <div id="container">
+        <div loading-modal show="false"></div>
+        <div navbar></div>
+        <div id="body" class="row no-margin-left-right">
+          <div><div ng-view=''></div></div>
+        </div>
+        <div id="footer">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margin-top-8">
+            <img tooltip="CSC-5.1" height="30" src="images/logo-seq-ari.png?fe5ffeb0">
+            <span>Control de Cargas</span>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right margin-top-12">
+            <span>SeqAri software</span>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

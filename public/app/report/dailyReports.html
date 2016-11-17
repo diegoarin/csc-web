@@ -1,0 +1,270 @@
+<div>
+  <div class="col-lg-12 dark-green-background padding-top-10 padding-bottom-10">
+    <div class="row">
+      <div class="col-lg-1 text-center">
+        <img src="images/chart-50.png">
+      </div>
+      <div class="col-lg-3">
+        <h3 class="margin-top-12">Reportes rápidos</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 margin-top-15">
+    <div class="dark-green-background reports-well">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4>Del día</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <h3 class="panel-title">Estado de pedidos</h3>
+            </div>
+            <div class="panel-body">
+              <span ng-if="ordersData.total > 0">
+                <canvas class="chart chart-doughnut"
+                  chart-data="ordersInfo"
+                  chart-labels="ordersLabels"
+                  chart-colours="ordersColors">
+                </canvas>
+                <div class="text-green text-center font-size-12">
+                  <span><span class="blue-square"></span> Pedidos pendientes: {{ordersData.pending}}, </span>
+                  <span><span class="yellow-square"></span> Pedidos en tránsito: {{ordersData.in_transit}}, </span>
+                  <span><span class="green-square"></span> Pedidos entregados: {{ordersData.delivered}}, </span>
+                  <span><span class="red-square"></span> Pedidos no entregados: {{ordersData.not_delivered}}</span>
+                </div>
+              </span>
+              <div class="no-info-big-green" ng-if="ordersData.total <= 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <h3 class="panel-title">Estado de recorridos</h3>
+            </div>
+            <div class="panel-body">
+              <span ng-if="routesData.total > 0">
+                <canvas ng-if="routesData.total > 0" class="chart chart-doughnut"
+                  chart-data="routesInfo"
+                  chart-labels="routesLabels"
+                  chart-colours="routesColors">
+                </canvas>
+                <div class="text-green text-center font-size-12">
+                  <span><span class="blue-square"></span> Recorridos pendientes: {{routesData.pending}}, </span>
+                  <span><span class="yellow-square"></span> Recorridos en tránsito: {{routesData.in_transit}}, </span>
+                  <span><span class="green-square"></span> Recorridos finalizados: {{routesData.finalized}}</span>
+                </div>
+              </span>
+              <div class="no-info-big-green" ng-if="routesData.total <= 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h3 class="panel-title">Recorridos con mayor tiempo de espera</h3>
+                </div>
+                <div class="col-lg-2 text-right">
+                  <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="routesDelayToggle = !routesDelayToggle">
+                    <span ng-if="!routesDelayToggle" class="glyphicon glyphicon-signal"></span>
+                    <span ng-if="routesDelayToggle" class="glyphicon glyphicon-record"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <span ng-if="routesDelay.length > 0">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <canvas ng-if="!routesDelayToggle" class="chart chart-line"
+                      chart-data="routesDelayInfo"
+                      chart-labels="routesDelayLabels"
+                      chart-legend="true">
+                    </canvas>
+                    <canvas ng-if="routesDelayToggle" class="chart chart-bar"
+                      chart-data="routesDelayInfo"
+                      chart-labels="routesDelayLabels"
+                      chart-legend="true">
+                    </canvas>
+                    <div class="text-green font-size-12">
+                      * Tiempos expresados en minutos
+                    </div>
+                  </div>
+                  <div class="col-lg-6 modal-text">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th class="text-right">Tiempo de espera</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="delay in routesDelay | orderBy:'-route_delay'">
+                          <td>Recorrido {{delay.route_id}}</td>
+                          <td class="text-right">{{delay.route_delay_date}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </span>
+              <div class="no-info-big-green" ng-if="routesDelay.length == 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 margin-top-15">
+    <div class="dark-green-background reports-well margin-bottom-15">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4>Del mes</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h3 class="panel-title">Top 10 - Transportistas con más recorridos</h3>
+                </div>
+                <div class="col-lg-2 text-right">
+                  <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="topDispatchersToggle = !topDispatchersToggle">
+                    <span ng-if="!topDispatchersToggle" class="glyphicon glyphicon-signal"></span>
+                    <span ng-if="topDispatchersToggle" class="glyphicon glyphicon-record"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <span ng-if="topDispatchers.length > 0">
+                <canvas ng-if="!topDispatchersToggle" class="chart chart-line"
+                  chart-data="topDispatchersInfo"
+                  chart-labels="topDispatchersLabels"
+                  chart-legend="true">
+                </canvas>
+                <canvas ng-if="topDispatchersToggle" class="chart chart-bar"
+                  chart-data="topDispatchersInfo"
+                  chart-labels="topDispatchersLabels"
+                  chart-legend="true">
+                </canvas>
+              </span>
+              <div class="no-info-big-green" ng-if="topDispatchers.length == 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h3 class="panel-title">Horarios de entrega más comunes</h3>
+                </div>
+                <div class="col-lg-2 text-right">
+                  <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="hoursDeliveredToggle = !hoursDeliveredToggle">
+                    <span ng-if="!hoursDeliveredToggle" class="glyphicon glyphicon-signal"></span>
+                    <span ng-if="hoursDeliveredToggle" class="glyphicon glyphicon-record"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <span ng-if="hoursDelivered.length > 0">
+                <canvas ng-if="!hoursDeliveredToggle" class="chart chart-line"
+                  chart-data="hoursDeliveredInfo"
+                  chart-labels="hoursDeliveredLabels"
+                  chart-legend="true">
+                </canvas>
+                <canvas ng-if="hoursDeliveredToggle" class="chart chart-bar"
+                  chart-data="hoursDeliveredInfo"
+                  chart-labels="hoursDeliveredLabels"
+                  chart-legend="true">
+                </canvas>
+              </span>
+              <div class="no-info-big-green" ng-if="hoursDelivered.length == 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h3 class="panel-title">Top 10 - Clientes con más pedidos entregados</h3>
+                </div>
+                <div class="col-lg-2 text-right">
+                  <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="topClientsToggle = !topClientsToggle">
+                    <span ng-if="!topClientsToggle" class="glyphicon glyphicon-signal"></span>
+                    <span ng-if="topClientsToggle" class="glyphicon glyphicon-record"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <span ng-if="topClients.length > 0">
+                <canvas ng-if="!topClientsToggle" class="chart chart-line"
+                  chart-data="topClientsInfo"
+                  chart-labels="topClientsLabels"
+                  chart-legend="true">
+                </canvas>
+                <canvas ng-if="topClientsToggle" class="chart chart-bar"
+                  chart-data="topClientsInfo"
+                  chart-labels="topClientsLabels"
+                  chart-legend="true">
+                </canvas>
+              </span>
+              <div class="no-info-big-green" ng-if="topClients.length == 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-success min-height-410">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h3 class="panel-title">Top 10 - Clientes con más demora</h3>
+                </div>
+                <div class="col-lg-2 text-right">
+                  <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="topClientsDelayToggle = !topClientsDelayToggle">
+                    <span ng-if="!topClientsDelayToggle" class="glyphicon glyphicon-signal"></span>
+                    <span ng-if="topClientsDelayToggle" class="glyphicon glyphicon-record"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <span ng-if="topClientsDelay.length > 0">
+                <canvas ng-if="!topClientsDelayToggle" class="chart chart-line"
+                  chart-data="topClientsDelayInfo"
+                  chart-labels="topClientsDelayLabels"
+                  chart-legend="true">
+                </canvas>
+                <canvas ng-if="topClientsDelayToggle" class="chart chart-bar"
+                  chart-data="topClientsDelayInfo"
+                  chart-labels="topClientsDelayLabels"
+                  chart-legend="true">
+                </canvas>
+                <div class="text-green font-size-12">
+                  * Tiempos expresados en minutos
+                </div>
+              </span>
+              <div class="no-info-big-green" ng-if="topClientsDelay.length == 0">Sin información</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

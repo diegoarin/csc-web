@@ -1,0 +1,24 @@
+<div class="modal-text">
+
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Permisos de {{user.name}}</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 margin-left-20">
+      <div ng-if="!!user.adm_users"><h4><li>Administraci&oacute;n de usuarios web</li></h4></div>
+      <div ng-if="!!user.adm_clients"><h4><li>Administraci&oacute;n de clientes</li></h4></div>
+      <div ng-if="!!user.adm_dispatchers"><h4><li>Administraci&oacute;n de transportistas</li></h4></div>
+      <div ng-if="!!user.reports"><h4><li>M&oacute;dulo de reportes</li></h4></div>
+      <div ng-if="!!user.queries"><h4><li>M&oacute;dulo de consultas</li></h4></div>
+    </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" ng-click="close()">Ok</button>
+  </div>
+
+</div>

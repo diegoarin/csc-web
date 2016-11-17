@@ -1,0 +1,104 @@
+<div>
+  <div class="col-lg-12 dark-green-background padding-top-10 padding-bottom-10">
+    <div class="row">
+      <div class="col-lg-1 text-center">
+        <img src="images/order-50.png">
+      </div>
+      <div class="col-lg-3">
+        <h3 class="margin-top-12">Listado de pedidos</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <div class="row dark-green-background custom-well">
+      <div class="col-lg-2 margin-top-12">
+        <div class="input-group">
+          <span class="input-group-addon">ID Cliente</span>
+          <input ng-model="ff_cr" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-3 margin-top-12">
+        <div class="input-group">
+          <span class="input-group-addon">Estado</span>
+          <select class="form-control cursor-pointer" ng-model="ff_status" ng-init="ff_status='PENDING'">
+            <option value="ALL">Todos</option>
+            <option value="PENDING">Pendiente</option>
+            <option value="TRANSIT">En tránsito</option>
+            <option value="DELIVERED">Entregado y verificado</option>
+            <option value="DELIVERED_WITHOUT_VALIDATION">Entregado sin verificar</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 margin-top-12 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Creado desde</span>
+          <input type="text" class="form-control border-right-4 white-readonly cursor-pointer"
+            ng-click="openFrom($event)"
+            datepicker-popup="dd/MM/yyyy"
+            ng-model="ff_dtFrom"
+            is-open="openedFrom"
+            show-weeks="false"
+            current-text="Hoy"
+            clear-text="Borrar"
+            close-text="Cerrar"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-lg-3 margin-top-12 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Creado hasta</span>
+          <input type="text" class="form-control border-right-4 white-readonly cursor-pointer"
+            ng-click="openTo($event)"
+            datepicker-popup="dd/MM/yyyy"
+            ng-model="ff_dtTo"
+            is-open="openedTo"
+            show-weeks="false"
+            current-text="Hoy"
+            clear-text="Borrar"
+            close-text="Cerrar"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-lg-1 margin-top-12">
+        <button type="button" name="button" class="btn btn-success" ng-click="ListOrders()">Listar</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 margin-top-20" ng-if="showResults == true">
+    <div class="row no-margin">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Fecha de creación</th>
+            <th class="text-right">Detalles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="order in filteredOrders | orderBy:'cr'">
+            <td>{{order.cr}}</td>
+            <td>{{order.business_name}}</td>
+            <td>{{order.status | orderStatus}}</td>
+            <td>{{order.created | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td class="text-right">
+              <img src="images/show-items.png" class="cursor-pointer margin-right-15" ng-click="showOrderSummary(order)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-lg-12 margin-top-40 text-center" ng-if="showResults == false">
+    <div class="row">
+      <span class="font-size-20">
+        No se encontraron pedidos con los filtros indicados, modifíquelos e intente nuevamente.
+      </span>
+    </div>
+  </div>
+</div>

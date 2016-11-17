@@ -1,0 +1,286 @@
+<div>
+  <div class="col-lg-12 dark-green-background padding-top-10 padding-bottom-10">
+    <div class="row">
+      <div class="col-lg-1 text-center">
+        <img src="images/report-50.png">
+      </div>
+      <div class="col-lg-11">
+        <div class="col-lg-5">
+          <h3 class="margin-top-12">Reportes de negocio</h3>
+        </div>
+        <div class="col-lg-3 margin-top-12 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Desde</span>
+            <input type="text" class="form-control border-right-4 white-readonly cursor-pointer"
+              ng-click="openFrom($event)"
+              datepicker-popup="dd/MM/yyyy"
+              ng-model="data.search_from"
+              is-open="openedFrom"
+              show-weeks="false"
+              current-text="Hoy"
+              clear-text="Borrar"
+              close-text="Cerrar"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-lg-3 margin-top-12 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Hasta</span>
+            <input type="text" class="form-control border-right-4 white-readonly cursor-pointer"
+              ng-click="openTo($event)"
+              datepicker-popup="dd/MM/yyyy"
+              ng-model="data.search_to"
+              is-open="openedTo"
+              show-weeks="false"
+              current-text="Hoy"
+              clear-text="Borrar"
+              close-text="Cerrar"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-lg-1 margin-top-12">
+          <button type="button" name="button" class="btn btn-success" ng-click="searchReports()" ng-disabled="!data.search_from || !data.search_to">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 padding-top-20 padding-bottom-10">
+    <div class="row" ng-if="showResults">
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Cantidad de envíos por cliente</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer margin-right-10">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="orderQuantity" csv-header="['Cliente', 'Cantidad']" filename="enviosPorClienteDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+                <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="orderQuantityToggle = !orderQuantityToggle">
+                  <span ng-if="!orderQuantityToggle" class="glyphicon glyphicon-signal"></span>
+                  <span ng-if="orderQuantityToggle" class="glyphicon glyphicon-record"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="orderQuantity.length > 0">
+              <canvas ng-if="!orderQuantityToggle" class="chart chart-line"
+                chart-data="orderQuantityInfo"
+                chart-labels="orderQuantityLabels"
+                chart-legend="true">
+              </canvas>
+              <canvas ng-if="orderQuantityToggle" class="chart chart-bar"
+                chart-data="orderQuantityInfo"
+                chart-labels="orderQuantityLabels"
+                chart-legend="true">
+              </canvas>
+            </span>
+            <div class="no-info-big-green" ng-if="orderQuantity.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Tiempo medio de entrega por cliente</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer margin-right-10">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="deliverAvg" csv-header="['Cliente', 'Promedio']" filename="tiempoEntregaPorClienteDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+                <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="deliverAvgToggle = !deliverAvgToggle">
+                  <span ng-if="!deliverAvgToggle" class="glyphicon glyphicon-signal"></span>
+                  <span ng-if="deliverAvgToggle" class="glyphicon glyphicon-record"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="deliverAvg.length > 0">
+              <canvas ng-if="!deliverAvgToggle" class="chart chart-line"
+                chart-data="deliverAvgInfo"
+                chart-labels="deliverAvgLabels"
+                chart-legend="true">
+              </canvas>
+              <canvas ng-if="deliverAvgToggle" class="chart chart-bar"
+                chart-data="deliverAvgInfo"
+                chart-labels="deliverAvgLabels"
+                chart-legend="true">
+              </canvas>
+              <div class="text-green font-size-12 margin-button-minus-10">
+                * Tiempos expresados en horas
+              </div>
+            </span>
+            <div class="no-info-big-green" ng-if="deliverAvg.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-if="showResults">
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Tiempo medio de entrega por transportista</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer margin-right-10">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="dispatcherDeliverAvg" csv-header="['Transportista', 'Promedio']" filename="tiempoEntregaPorTransportistaDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+                <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="dispatcherDeliverAvgToggle = !dispatcherDeliverAvgToggle">
+                  <span ng-if="!dispatcherDeliverAvgToggle" class="glyphicon glyphicon-signal"></span>
+                  <span ng-if="dispatcherDeliverAvgToggle" class="glyphicon glyphicon-record"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="dispatcherDeliverAvg.length > 0">
+              <canvas ng-if="!dispatcherDeliverAvgToggle" class="chart chart-line"
+                chart-data="dispatcherDeliverAvgInfo"
+                chart-labels="dispatcherDeliverAvgLabels"
+                chart-legend="true">
+              </canvas>
+              <canvas ng-if="dispatcherDeliverAvgToggle" class="chart chart-bar"
+                chart-data="dispatcherDeliverAvgInfo"
+                chart-labels="dispatcherDeliverAvgLabels"
+                chart-legend="true">
+              </canvas>
+              <div class="text-green font-size-12 margin-button-minus-10">
+                * Tiempos expresados en horas
+              </div>
+            </span>
+            <div class="no-info-big-green" ng-if="dispatcherDeliverAvg.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Cantidad de pedidos no entregados por fecha</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer margin-right-10">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="ordersNotDelivered" csv-header="['Pedido', 'Cantidad']" filename="pedidosNoEntregadosPorFechaDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+                <span class="cursor-pointer" tooltip="Cambiar gráfica" ng-click="ordersNotDeliveredToggle = !ordersNotDeliveredToggle">
+                  <span ng-if="!ordersNotDeliveredToggle" class="glyphicon glyphicon-signal"></span>
+                  <span ng-if="ordersNotDeliveredToggle" class="glyphicon glyphicon-record"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="ordersNotDelivered.length > 0">
+              <canvas ng-if="!ordersNotDeliveredToggle" class="chart chart-line"
+                chart-data="ordersNotDeliveredInfo"
+                chart-labels="ordersNotDeliveredLabels"
+                chart-legend="true">
+              </canvas>
+              <canvas ng-if="ordersNotDeliveredToggle" class="chart chart-bar"
+                chart-data="ordersNotDeliveredInfo"
+                chart-labels="ordersNotDeliveredLabels"
+                chart-legend="true">
+              </canvas>
+              <div ng-if="auxOrdersMaxResults" class="text-green font-size-12 margin-button-minus-10">
+                * Existen mas datos para mostrar
+              </div>
+            </span>
+            <div class="no-info-big-green" ng-if="ordersNotDelivered.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-if="showResults">
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Recorridos finalizados</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="routesFinished" csv-header="['Codigo', 'Fecha inicio', 'Fecha fin', 'Duracion', 'Transportista']" filename="recorridosFinalizadosDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="routesFinished.length > 0" class="modal-text">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Fecha inicio</th>
+                    <th>Fecha fin</th>
+                    <th>Duración</th>
+                    <th class="text-right">Transportista</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="finished in routesFinished | limitTo:10">
+                    <td>{{finished.code}}</td>
+                    <td>{{finished.start | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{finished.end | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{finished.strDuration}}</td>
+                    <td class="text-right">{{finished.name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </span>
+            <div class="no-info-big-green" ng-if="routesFinished.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="panel panel-success min-height-410">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-10">
+                <h3 class="panel-title">Pedidos entregados</h3>
+              </div>
+              <div class="col-lg-2 text-right">
+                <span class="cursor-pointer">
+                  <span class="glyphicon glyphicon-download-alt" tooltip="Descargar" ng-csv="ordersDelivered" csv-header="['Cliente', 'Codigo', 'Fecha creacion', 'Fecha entregado']" filename="pedidosEntregadosDesde{{data.search_from}}Hasta{{data.search_to}}.csv"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <span ng-if="ordersDelivered.length > 0" class="modal-text">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Fecha creación</th>
+                    <th class="text-right">Fecha entrega</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="delivered in ordersDelivered | limitTo:10">
+                    <td>{{delivered.code}}</td>
+                    <td>{{delivered.client_name}}</td>
+                    <td>{{delivered.created | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <td class="text-right">{{delivered.delivered | date: 'dd/MM/yyyy HH:mm'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </span>
+            <div class="no-info-big-green" ng-if="ordersDelivered.length == 0">Sin información</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

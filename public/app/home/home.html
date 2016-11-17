@@ -1,0 +1,84 @@
+<div class="col-lg-12 margin-top-50">
+	<div access-error></div>
+	<div ng-if="$root.isLogged">
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-3 text-center">
+				<span class="principal-title animated pulse">¿Qué quieres hacer?</span>
+			</div>
+		</div>
+		<div class="margin-top-50">
+			<div ng-if="$root.loggedUser.queries" class="row dark-green-background padding-top-40 padding-bottom-40 animated bounceInLeft">
+				<div class="col-lg-4 text-center">
+					<img height="80" src="images/order-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="showOrders()">
+							Consultar pedidos
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-4 text-center">
+					<img height="80" src="images/route-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="showRoutes()">
+							Consultar recorridos
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-4 text-center">
+					<img height="80" src="images/history-route-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="showHistoryRoutes()">
+							Buscar recorridos históricos
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row padding-top-40 padding-bottom-40">
+				<div ng-if="$root.loggedUser.adm_users" class="col-lg-4 text-center">
+					<img height="80" src="images/web-user-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="adminWebUsers()">
+							Administrar usuarios web
+						</button>
+					</div>
+				</div>
+				<div ng-if="$root.loggedUser.adm_clients" class="col-lg-4 text-center">
+					<img height="80" src="images/client-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="adminClients()">
+							Administrar clientes
+						</button>
+					</div>
+				</div>
+				<div ng-if="$root.loggedUser.adm_dispatchers" class="col-lg-4 text-center">
+					<img height="80" src="images/dispatcher-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="adminDispatchers()">
+							Administrar transportistas
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div  ng-if="$root.loggedUser.reports" class="row dark-green-background padding-top-40 padding-bottom-40 animated bounceInLeft">
+				<div class="col-lg-6 text-center">
+					<img height="80" src="images/chart-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="dailyReports()">
+							Ver reportes rápidos
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-6 text-center">
+					<img height="80" src="images/report-100.png">
+					<div class="margin-top-20">
+						<button class="btn btn-md btn-success cursor-pointer" role="button" ng-click="businessReports()">
+							Ver reportes de negocio
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
