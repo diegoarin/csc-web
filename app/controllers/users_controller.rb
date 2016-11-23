@@ -43,7 +43,6 @@ class UsersController < ApplicationController
     end
   end
 
-  #FIXME: metodos propios se hacen aca o son privados (se lo llama por REST)?
   def user_logged
     user_session = current_user_session
     if !user_session.nil? && !user_session.record.nil?

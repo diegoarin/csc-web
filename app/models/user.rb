@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
     c.validate_password_field = true
     c.require_password_confirmation = true
     c.logged_in_timeout = 30.minutes
+    c.crypto_provider = Authlogic::CryptoProviders::Sha512
   end
   validates_presence_of   :login, :email
   validates_uniqueness_of :login, :email
